@@ -4,23 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Result;
+import me.dm7.barcodescanner.zbar.BarcodeFormat;
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+public class ScannerActivity extends Activity implements ZBarScannerView.ResultHandler {
 
-public class ScannerActivity extends Activity implements ZXingScannerView.ResultHandler {
-
-    private ZXingScannerView mScannerView;
+    private ZBarScannerView mScannerView;
 
     private static final String LOG_TAG = "MyLogs";
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-        mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
+        mScannerView = new ZBarScannerView(this);    // Programmatically initialize the scanner view
         setContentView(mScannerView);                // Set the scanner view as the content view
     }
 
@@ -40,13 +38,13 @@ public class ScannerActivity extends Activity implements ZXingScannerView.Result
     @Override
     public void handleResult(Result rawResult) {
         // Do something with the result here
-        Log.v(LOG_TAG, rawResult.getText()); // Prints scan results
-        Log.v(LOG_TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+        Log.v(LOG_TAG, rawResult.getContents()); // Prints scan results
+        Log.v(LOG_TAG, rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
 
-        if (rawResult.getBarcodeFormat() == BarcodeFormat.EAN_13) {
+        if (rawResult.getBarcodeFormat() == BarcodeFormat.EAN13) {
 
             Intent i = new Intent(getApplication(), CheckFuelTicketActivity.class);
-            i.putExtra("fuelTicket", rawResult.getText());
+            i.putExtra("fuelTicket", rawResult.getContents());
             startActivity(i);
             finish();
 
@@ -59,4 +57,5 @@ public class ScannerActivity extends Activity implements ZXingScannerView.Result
 
         }
     }
+
 }

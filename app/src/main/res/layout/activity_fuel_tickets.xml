@@ -22,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Использовать купоны"
-        android:id="@+id/button"
+        android:id="@+id/buttonUse"
+        android:onClick="buttonUseOnClick"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -31,6 +32,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView"
         android:layout_below="@+id/buttonScan"
+        android:layout_marginTop="11pt"
+        android:layout_marginBottom="11pt"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button" />
 
