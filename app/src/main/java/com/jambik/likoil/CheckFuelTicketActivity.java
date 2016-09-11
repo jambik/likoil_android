@@ -42,7 +42,7 @@ public class CheckFuelTicketActivity extends AppCompatActivity {
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
-        Ion.getDefault(getApplicationContext()).configure().setLogging(LOG_TAG, Log.DEBUG);
+//        Ion.getDefault(getApplicationContext()).configure().setLogging(LOG_TAG, Log.DEBUG);
 
         if (mSettings.contains(APP_PREFERENCES_API_TOKEN)) {
 
@@ -72,9 +72,12 @@ public class CheckFuelTicketActivity extends AppCompatActivity {
                                     Log.d(LOG_TAG, "message: " + obj.getString("message"));
                                     Log.d(LOG_TAG, "fuel_ticket: " + obj.getJSONObject("fuel_ticket"));
 
-                                    Intent i = new Intent(getApplication(), FuelTicketsActivity.class);
+                                   /* Intent i = new Intent(getApplication(), FuelTicketsActivity.class);
                                     i.putExtra("fuelTicket", obj.getJSONObject("fuel_ticket").toString());
-                                    startActivity(i);
+                                    startActivity(i);*/
+
+                                    FuelTicketsActivity.addTicket(obj.getJSONObject("fuel_ticket").toString());
+
                                     finish();
 
                                 } catch (Throwable t) {
@@ -84,23 +87,21 @@ public class CheckFuelTicketActivity extends AppCompatActivity {
                                 }
 
                             } else if (code == 401) { // Не авторизован
-
                                 Intent i = new Intent(getApplication(), AuthActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
                                 finish();
 
                             } else if (code == 404) { // Купон не найден
 
                                 Toast.makeText(getApplicationContext(), "Купон с номером - " + fuelTicket + " не найден", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(getApplication(), FuelTicketsActivity.class);
-                                startActivity(i);
+
                                 finish();
 
                             } else { // Другая ошибка
 
                                 Toast.makeText(getApplicationContext(), "HTTP код ответа - " + code, Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(getApplication(), FuelTicketsActivity.class);
-                                startActivity(i);
+
                                 finish();
 
                             }
