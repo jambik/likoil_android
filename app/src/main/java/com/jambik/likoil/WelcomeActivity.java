@@ -20,7 +20,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private SharedPreferences mSettings;
     private String mApiToken;
 
-    private static final String API_URL = "http://jambik.ru/api/v1/";
+    private static final String API_URL = "http://mve05.ru/api/v1/";
     private static final String LOG_TAG = "MyLogs";
 
     @Override
